@@ -1,0 +1,26 @@
+<idea-plugin>
+    <id>org.example.jpi</id>
+    <name> Jpi </name>
+    <vendor email="qifan_wang2021@163.com" url="http://cstar.whu.edu.cn/en/index.html">CSTAR</vendor>
+
+    <description><![CDATA[
+    Jpi is a plugin to get java project information.<br>
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <notificationGroup displayType="BALLOON" id="Custom Notification Group" />
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="jpi.actions.CustomAction" class="jpi.actions.CustomAction" text="Jpi List"
+                description="Jpi will get project information">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
