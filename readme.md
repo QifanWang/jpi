@@ -1,4 +1,4 @@
-##Jpi 插件使用说明
+## Jpi 插件使用说明
 
 
 0. 确定 intellij IDEA 版本为 2021.2 或之前版本。
@@ -11,7 +11,7 @@
 
 安装后重启IDE
 
-2. 从IDE打开工程，选择工程下目标 java 文件，右键选择 `Jpi List`
+2. 从IDE打开工程，在工程视图下选择目标 java 文件，右键选择 `Jpi List`
 
 ![Action](images/action.jpg)
 

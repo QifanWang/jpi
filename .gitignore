@@ -1,5 +1,4 @@
 build/
 .gradle/
 .idea/
-jpi-1.0-SNAPSHOT.jar
 jpi-output.txt

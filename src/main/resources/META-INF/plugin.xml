@@ -20,7 +20,7 @@
         <!-- Add your actions here -->
         <action id="jpi.actions.CustomAction" class="jpi.actions.CustomAction" text="Jpi List"
                 description="Jpi will get project information">
-            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
         </action>
     </actions>
 </idea-plugin>
