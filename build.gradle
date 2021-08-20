@@ -27,11 +27,12 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     pluginName = 'Jpi-Tool'
-    version = '2021.2'
+    version = '2020.3'
 }
 patchPluginXml {
     changeNotes = """
-      First version.<br>"""
+      First version.<br>
+      For IC-203.* or older versions.<br>"""
 }
 test {
     useJUnitPlatform()

@@ -23,4 +23,6 @@
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
         </action>
     </actions>
+
+    <idea-version since-build="191" />
 </idea-plugin>

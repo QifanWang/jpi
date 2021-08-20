@@ -1,9 +1,7 @@
 ## Jpi 插件使用说明
 
 
-0. 确定 intellij IDEA 版本为 2021.2 或之前版本。
-
-![Version Info](images/version-info.png)
+0. 确定 intellij IDEA 版本为 2020.3 或之前版本。
 
 1. 选择从磁盘安装插件文件 `jpi-1.0-SNAPSHOT.jar`
 
