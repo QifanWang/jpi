@@ -10,6 +10,7 @@
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
@@ -18,11 +19,15 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="jpi.actions.CustomAction" class="jpi.actions.CustomAction" text="Jpi List"
+        <action id="jpi.actions.CustomAction" class="jpi.actions.CustomAction" text="Jpi: Get Project Info"
                 description="Jpi will get project information">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
         </action>
+        <action id="jpi.actions.ActionedList" class="jpi.actions.ActionedList" text="Jpi: Get Element Info List"
+                description="Jpi will get actioned element information list">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="jpi.actions.CustomAction"/>
+        </action>
     </actions>
 
-    <idea-version since-build="191" />
+    <idea-version since-build="201.6668.113" />
 </idea-plugin>

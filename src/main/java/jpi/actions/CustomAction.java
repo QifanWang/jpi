@@ -13,11 +13,9 @@ import com.intellij.openapi.roots.SourceFolder;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import jpi.notifiers.MyNotifier;
+import jpi.utility.Util;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -88,20 +86,8 @@ public class CustomAction extends AnAction {
             sb.append(Arrays.toString(dependentModulesNames));
         }
 
-        writeOutput(curProj.getBasePath(), sb);
+        Util.writeOutput(curProj.getBasePath(), sb);
 
         MyNotifier.notifyInfo(curProj, "Jpi outputs into jpi-output.txt file.\nPlease check.");
-    }
-
-    private void writeOutput(String path, StringBuilder sb) {
-        try {
-
-            File f = new File(path + "/jpi-output.txt");
-            FileWriter fw = new FileWriter(f);
-            fw.write(sb.toString());
-            fw.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 }
