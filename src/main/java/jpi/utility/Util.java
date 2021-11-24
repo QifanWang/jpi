@@ -1,8 +1,6 @@
 package jpi.utility;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class Util {
     private Util() {}
@@ -18,4 +16,16 @@ public class Util {
             ex.printStackTrace();
         }
     }
+
+    public static String rmHeader(String oldStr) {
+        if(oldStr == null) return null;
+
+        if(oldStr.startsWith("file://"))
+            return oldStr.substring(7);
+        else if(oldStr.startsWith("jrt://"))
+            return oldStr.substring(6);
+        else
+            return oldStr;
+    }
+
 }
