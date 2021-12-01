@@ -3,10 +3,10 @@ package jpi.actions;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.compiler.CompilerPaths;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.CompilerProjectExtension;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.SourceFolder;
@@ -22,7 +22,9 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -47,6 +49,7 @@ public class CustomAction extends AnAction {
         sb.append(curProj.getName()).append("\n");
 
         Map<String, List<Path>> eclipseConfig = getEclipseConfig(curProj.getBasePath());
+//        String mvnOutputPathStr = getMavenOutputPath(curProj.getBasePath());
 
         // source folder of the action file
         PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
@@ -78,15 +81,20 @@ public class CustomAction extends AnAction {
             }
 
             //3) output paths
-            String outputUrl = Objects.requireNonNull(CompilerProjectExtension.getInstance(curProj)).getCompilerOutputUrl();
+            // compile output path of module is different from that of proj
+//            String outputUrl = Objects.requireNonNull(CompilerProjectExtension.getInstance(curProj)).getCompilerOutputUrl();
             sb.append("output directory: \n");
             // eclipse output
             if(eclipseConfig.containsKey("output")) {
                 sb.append(eclipseConfig.get("output").toString().replace('\\', '/'))
-                  .append(';');
+                  .append(";\n");
             }
             // IDEA output
-            sb.append(Util.rmHeader(outputUrl)).append("\n");
+            String notForTestClasses = CompilerPaths.getModuleOutputPath(m, false);
+            String forTestClasses = CompilerPaths.getModuleOutputPath(m, true);
+            sb.append(Util.rmHeader(notForTestClasses)).append('\n')
+              .append(Util.rmHeader(forTestClasses)).append('\n');
+//            sb.append(Util.rmHeader(outputUrl)).append("\n");
 
             //4) dependency lib
             sb.append("libraries: \n");
@@ -150,5 +158,49 @@ public class CustomAction extends AnAction {
         }
 
         return kind2paths;
+    }
+
+    private static String getMavenOutputPath(String basePath) {
+        File pomFile = new File(basePath + "/pom.xml");
+
+        if(!pomFile.exists()) return "";
+
+        try {
+            DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+
+            InputStream inputStream= new FileInputStream(pomFile);
+
+            Document doc = dBuilder.parse(inputStream);
+
+            doc.getDocumentElement().normalize();
+            // real xml file, so need getDocumentElement()
+            NodeList bdTags = doc.getDocumentElement().getElementsByTagName("build");
+            if(bdTags != null && bdTags.getLength() == 1) {
+                Node bdTag = bdTags.item(0);
+
+                NodeList nl = bdTag.getChildNodes();
+                int len = nl.getLength();
+                StringBuilder ret = new StringBuilder("");
+                for(int i = 0; i < len; ++i) {
+                    Node tag = nl.item(i);
+                    String tagName = tag.getNodeName();
+                    if(tagName.equals("directory")) {
+                        ret.insert(0, tag.getNodeValue());
+                    } else if(tagName.equals("outputDirectory")) {
+                        ret.append(tag.getNodeName());
+                    }
+                }
+
+                if(ret.length() != 0) {
+                    return ret.toString();
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return basePath + "/target/classes"; // default output path
     }
 }

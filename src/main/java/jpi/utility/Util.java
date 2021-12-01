@@ -24,6 +24,8 @@ public class Util {
             return oldStr.substring(7);
         else if(oldStr.startsWith("jrt://"))
             return oldStr.substring(6);
+        else if(oldStr.startsWith("jar://"))
+            return oldStr.substring(6);
         else
             return oldStr;
     }

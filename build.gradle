@@ -11,7 +11,7 @@ plugins {
 }
 
 group 'org.example'
-version '1.1'
+version '1.2'
 
 repositories {
     mavenCentral()
@@ -32,8 +32,9 @@ intellij {
 }
 patchPluginXml {
     changeNotes = """
-      Second version.<br>
-      For IC-201.6668.113 to 203.<br>"""
+      Third version.<br>
+      For IC-201.6668.113 to 203.<br>
+      Add more module compiler output paths<br>"""
 }
 test {
     useJUnitPlatform()
